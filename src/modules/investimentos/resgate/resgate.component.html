@@ -1,0 +1,71 @@
+<div class='container-fluid container-pagina bg-light'>
+
+  <section class='row mb-4 border-bottom'>
+    <h2 class='p-2'>Detalhes dos Investimentos</h2>
+  </section>
+
+  <section class='row p-2 bg-white border text-muted'>
+    <div class='d-flex align-content-center col'>
+      <fa-icon class='fs-2' [icon]='faUser'></fa-icon>
+      <div class='info-grupo'>
+        <p class='m-0'>Nome</p>
+        <h4 class='m-0'>{{investimento?.nome}}</h4>
+      </div>
+    </div>
+
+    <div class='d-flex align-content-center col'>
+      <fa-icon class='fs-2' [icon]='charLine'></fa-icon>
+      <div class='info-grupo'>
+        <p class='m-0'>Objetivo</p>
+        <h4 class='m-0'>{{investimento?.objetivo}}</h4>
+      </div>
+    </div>
+
+    <div class='d-flex align-content-center col'>
+      <fa-icon class='fs-2' [icon]='faDollar'></fa-icon>
+      <div class='info-grupo'>
+        <p class='m-0'>Saldo Total</p>
+        <h4 class='m-0'>{{investimento?.saldoTotal | currency: 'BRL'}}</h4>
+      </div>
+    </div>
+  </section>
+
+  <section class='row mb-4 mt-2  border-bottom'>
+    <h2 class='p-2'>Resgate</h2>
+  </section>
+
+  <form [formGroup]='form' (ngSubmit)='confirmarResgate()'>
+    <section class='row mb-4 bg-white'>
+      <table class='table table-striped'>
+        <thead class='border'>
+        <tr>
+          <th>Ação</th>
+          <th>Saldo Acumulado</th>
+          <th>Valor a Resgatar</th>
+        </tr>
+        </thead>
+        <tbody class='body-form' formArrayName='acoes'>
+        <tr class='p-2' [formGroup]='castToGroup(acao)' *ngFor='let acao of acoesControlArray?.controls; let i = index'>
+          <td>{{acao?.value?.nome}}</td>
+          <td>{{acao?.value?.saldoAcumulado | currency: 'BRL'}}</td>
+          <td>
+            <input class='form-control' formControlName='valorResgate' type='text'>
+            <p *ngIf='acao.errors?.["resgateInvalido"] && acao.touched && acao.dirty'>danosse</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class='row mb-4 p-2 bg-white'>
+      <strong>Valor total do resgate:</strong>
+    </section>
+
+    <section>
+      <button class='btn' (click)='cancelar()'>Cancelar</button>
+      <button class='btn btn-primary' type='submit'>Confirmar Resgate</button>
+    </section>
+
+  </form>
+
+</div>

@@ -2,3 +2,12 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+body {
+  height: 100vh;
+}
+
+.container-pagina {
+  padding: 2rem;
+  height: 100%;
+}
