@@ -9,7 +9,7 @@
       <fa-icon class='fs-2' [icon]='faUser'></fa-icon>
       <div class='info-grupo'>
         <p class='m-0'>Nome</p>
-        <h4 class='m-0'>{{investimento?.nome}}</h4>
+        <h5 class='m-0'>{{investimento?.nome}}</h5>
       </div>
     </div>
 
@@ -17,7 +17,7 @@
       <fa-icon class='fs-2' [icon]='charLine'></fa-icon>
       <div class='info-grupo'>
         <p class='m-0'>Objetivo</p>
-        <h4 class='m-0'>{{investimento?.objetivo}}</h4>
+        <h5 class='m-0'>{{investimento?.objetivo}}</h5>
       </div>
     </div>
 
@@ -25,7 +25,7 @@
       <fa-icon class='fs-2' [icon]='faDollar'></fa-icon>
       <div class='info-grupo'>
         <p class='m-0'>Saldo Total</p>
-        <h4 class='m-0'>{{investimento?.saldoTotal | currency: 'BRL'}}</h4>
+        <h5 class='m-0'>{{investimento?.saldoTotal | currency: 'BRL'}}</h5>
       </div>
     </div>
   </section>
@@ -45,27 +45,62 @@
         </tr>
         </thead>
         <tbody class='body-form' formArrayName='acoes'>
-        <tr class='p-2' [formGroup]='castToGroup(acao)' *ngFor='let acao of acoesControlArray?.controls; let i = index'>
-          <td>{{acao?.value?.nome}}</td>
+        <tr [formGroup]='castParaGroup(acao)' *ngFor='let acao of acoesControlArray?.controls; let i = index'>
+          <td class='pt-4 pb-4'>{{acao?.value?.nome}}</td>
           <td>{{acao?.value?.saldoAcumulado | currency: 'BRL'}}</td>
           <td>
-            <input class='form-control' formControlName='valorResgate' type='text'>
-            <p *ngIf='acao.errors?.["resgateInvalido"] && acao.touched && acao.dirty'>danosse</p>
+            <div class='form-floating'>
+            <input [id]='i' prefix='R$ '  mask='separator.2'
+                   thousandSeparator='.' class='form-control col-lg-6'
+                   formControlName='valorResgate' type='text'>
+              <label [for]='i'>Digite quanto deseja resgatar</label>
+            <p class='mensagem-erro' *ngIf='acao.errors?.["resgateInvalido"] && submit'>O valor a
+              resgatar não pode ser
+              maior que {{acao?.value?.saldoAcumulado | currency: 'BRL'}}</p>
+            </div>
           </td>
         </tr>
         </tbody>
       </table>
     </section>
 
-    <section class='row mb-4 p-2 bg-white'>
+    <section class='row d-flex mb-4 p-2 bg-white'>
       <strong>Valor total do resgate:</strong>
+      <p>{{totalResgatado | currency: 'BRL'}}</p>
     </section>
 
-    <section>
-      <button class='btn' (click)='cancelar()'>Cancelar</button>
+    <section class='d-grid gap-2 d-md-flex justify-content-md-end mb-2'>
+      <button class='btn btn-secondary me-md-2' (click)='cancelar()'>Cancelar</button>
       <button class='btn btn-primary' type='submit'>Confirmar Resgate</button>
     </section>
-
   </form>
+
+  <ng-template #modalResgate let-modalResgate>
+    <div class='modal-header'>
+      <h4>Resgate efetuado com sucesso!</h4>
+    </div>
+    <div class='modal-footer'>
+      <button class='btn btn-primary' (click)='modalResgate.close()'>Novo Resgate</button>
+    </div>
+  </ng-template>
+
+  <ng-template #modalErro let-modalErro>
+    <div class='modal-header'>
+      <h4>Dados inválidos!</h4>
+    </div>
+    <div class='modal-body'>
+      <p>Você preencheu um ou mais campos com um valor acima do permitido:</p>
+      <section *ngFor='let acao of acoesControlArray?.controls'>
+        <div class='d-flex align-content-between' *ngIf='acao.errors?.["resgateInvalido"]'>
+          <p class='fw-bold'>{{acao?.value.nome}}:</p>
+          <p class='mx-1'>O valor a resgatar não pode ser maior
+            que {{acao?.value?.saldoAcumulado | currency: 'BRL'}}</p>
+        </div>
+      </section>
+    </div>
+    <div class='modal-footer'>
+      <button class='btn btn-primary' (click)='modalErro.close()'>Corrigir</button>
+    </div>
+  </ng-template>
 
 </div>

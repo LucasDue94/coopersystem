@@ -9,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { NgxMaskModule } from 'ngx-mask';
 
 registerLocaleData(localePt);
 
@@ -20,7 +21,8 @@ registerLocaleData(localePt);
     AppRoutingModule,
     InvestimentosModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]

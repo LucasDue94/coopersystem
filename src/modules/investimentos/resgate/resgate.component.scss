@@ -6,8 +6,22 @@
   .body-form {
     tr {
       td {
+        padding: 1.5rem 0.5rem;
         vertical-align: middle;
       }
     }
   }
+
+  .mensagem-erro {
+    font-weight: 600;
+    font-size: 14px;
+    color: red;
+    margin-bottom: 0;
+  }
+
+  .container-botoes {
+    display: flex;
+    justify-content: end;
+  }
+
 }
