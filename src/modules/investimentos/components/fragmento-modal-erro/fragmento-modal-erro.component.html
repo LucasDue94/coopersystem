@@ -1,0 +1,8 @@
+<p>Você preencheu um ou mais campos com um valor acima do permitido:</p>
+<section *ngFor='let acao of controls'>
+  <div class='d-flex align-content-between' *ngIf='acao.errors?.["resgateInvalido"]'>
+    <p class='fw-bold'>{{acao?.value.nome}}:</p>
+    <p class='mx-1'>O valor a resgatar não pode ser maior
+      que {{acao?.value?.saldoAcumulado | currency: 'BRL'}}</p>
+  </div>
+</section>

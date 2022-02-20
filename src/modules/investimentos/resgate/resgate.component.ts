@@ -5,6 +5,8 @@ import { Investimento } from '../../../models/investimento';
 import { Acao } from '../../../models/acao';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalSucessoComponent } from '../components/modal-sucesso/modal-sucesso.component';
+import { ModalErroComponent } from '../components/modal-erro/modal-erro.component';
 
 @Component({
   selector: 'app-resgate',
@@ -75,12 +77,11 @@ export class ResgateComponent implements OnInit {
     this.acoesControlArray.push(group);
   }
 
-  castParaGroup = (acao: AbstractControl) => acao as FormGroup;
+  getArrayGroup = () => this.acoesControlArray.controls.map(control => control as FormGroup);
 
   cancelar = () => this.router.navigate(['investimentos']);
 
   confirmarResgate() {
-    console.log(this.acoesControlArray);
     this.submit = true;
 
     if (this.acoesControlArray.valid && this.acoesControlArray.dirty) {
@@ -98,8 +99,8 @@ export class ResgateComponent implements OnInit {
       const group = abstractControl as FormGroup;
       const { valorResgate, saldoAcumulado } = group.value;
       const valorResgatadoConvertido = this.converteStringParaNumber(valorResgate);
+
       if (valorResgatadoConvertido <= saldoAcumulado) {
-        console.log(group);
         group.controls['saldoAcumulado'].setValue(saldoAcumulado - valorResgatadoConvertido);
         this.investimento.saldoTotal -= valorResgatadoConvertido;
         this.totalResgatado += valorResgatadoConvertido;
@@ -107,6 +108,7 @@ export class ResgateComponent implements OnInit {
     });
   }
 
-  abrirModalSucesso = () => this.modalService.open(this.modalResgate, { centered: true });
+  abrirModalSucesso = () => this.modalService.open(ModalSucessoComponent, { centered: true });
+
   abrirModalErro = () => this.modalService.open(this.modalErro, { size: 'lg', centered: true });
 }

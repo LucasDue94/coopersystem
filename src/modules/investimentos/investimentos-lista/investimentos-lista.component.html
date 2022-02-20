@@ -1,7 +1,9 @@
 <div class='container-fluid container-pagina bg-light'>
-  <section class='row mb-2 bg-white border'>
+
+  <section class='row mb-4 border-bottom'>
     <h2 class='p-2'>Investimentos</h2>
   </section>
+
   <section class='row'>
     <div *ngFor='let investimento of listaInvestimentos' (click)='resgate(investimento.nome, investimento)'
          [class.card-carencia]='temCarencia(investimento.indicadorCarencia)'
@@ -14,4 +16,5 @@
       </div>
     </div>
   </section>
+
 </div>
