@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,14 +7,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './modal-erro.component.html',
   styleUrls: ['./modal-erro.component.scss']
 })
-export class ModalErroComponent implements OnInit {
+export class ModalErroComponent {
   @Input() controls: FormGroup[] = [];
   @Input() closeModal = ()=>{};
   constructor(public activeModal: NgbActiveModal) {
   }
-
-  ngOnInit(): void {
-  }
-
 
 }

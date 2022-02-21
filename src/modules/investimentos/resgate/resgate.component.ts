@@ -6,7 +6,6 @@ import { Acao } from '../../../models/acao';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalSucessoComponent } from '../components/modal-sucesso/modal-sucesso.component';
-import { ModalErroComponent } from '../components/modal-erro/modal-erro.component';
 
 @Component({
   selector: 'app-resgate',
